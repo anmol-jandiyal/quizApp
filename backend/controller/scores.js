@@ -2,7 +2,7 @@ import User from "../models/users.js";
 import { getUser } from "./auth.js";
 
 export async function getScores(req, res) {
-	const uid = req.cookies.uid;
+	const uid = req.params.uid;
 	const user = getUser(uid);
 
 	try {
@@ -17,8 +17,9 @@ export async function getScores(req, res) {
 	}
 }
 export async function addScores(req, res) {
-	const uid = req.cookies.uid;
+	const uid = req.body.uid;
 	const user = getUser(uid);
+	console.log(user);
 	const { topic, marks } = req.body;
 
 	try {

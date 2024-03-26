@@ -11,7 +11,7 @@ export default function ScorePage() {
 	useEffect(() => {
 		if (user)
 			axios
-				.get(BASEURL + "scores/", { withCredentials: true })
+				.get(BASEURL + "scores/" + user.uid, { withCredentials: true })
 				.then((response) => {
 					const scores = response.data.scores;
 					if (scores.length === 0) {

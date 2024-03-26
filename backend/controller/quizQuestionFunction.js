@@ -1,4 +1,3 @@
-import { compareSync } from "bcrypt";
 import TopicQuestion from "../models/topicQuestion.js";
 
 export function addQuestions(req, res) {

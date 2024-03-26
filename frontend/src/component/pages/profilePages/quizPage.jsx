@@ -15,7 +15,7 @@ export default function QuizPage() {
 	useEffect(() => {
 		if (user)
 			axios
-				.get(BASEURL + "questionbank/questions/" + topic, { withCredentials: true })
+				.get(BASEURL + "questionbank/questions/" + topic + "/" + user.uid, { withCredentials: true })
 				.then((response) => {
 					setQuestionBank(response.data.questions.questionBank);
 					navigate("/quiz/" + topic + "/" + "attempt");

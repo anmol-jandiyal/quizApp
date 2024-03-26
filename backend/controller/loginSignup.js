@@ -38,9 +38,8 @@ async function userLogin(req, res) {
 
 				if (validateBool) {
 					const token = setUser(userDoc);
-					res.cookie("uid", token, { httpOnly: true });
 
-					return res.status(200).json({ user: { userName: userDoc.userName, privilege: userDoc.privilege }, message: "successful login" });
+					return res.status(200).json({ user: { userName: userDoc.userName, privilege: userDoc.privilege, uid: token }, message: "successful login" });
 				}
 				return res.status(401).json({ error: "Invalid password" });
 			} else {
@@ -56,9 +55,9 @@ async function userLogin(req, res) {
 }
 
 //<-------------LOG OUT -------------->
-
+/* 
 function userLogOut(req, res) {
-	const uid = req.cookies.uid;
+	const uid = req.body.uid;
 
 	if (uid) {
 		res.clearCookie("uid");
@@ -67,10 +66,10 @@ function userLogOut(req, res) {
 
 	res.status(400).json({ message: "Already logged out! No user have logged in" });
 }
-
+ */
 //<-------------------------checking if any user is loggin  or not ------------------------------>
 async function anyOneLoggedIn(req, res, next) {
-	const uid = req.cookies.uid;
+	const uid = req.body.uid;
 
 	if (uid) {
 		//if uid exist then check if uid is associates to authentic  user or not
@@ -92,7 +91,7 @@ async function anyOneLoggedIn(req, res, next) {
 
 // <--------to restrict the services that are allowed to logged user only---------------------->
 async function restrictToLoggedUser(req, res, next) {
-	const uid = req.cookies.uid;
+	const uid = req.params.uid ?? req.body.uid;
 
 	if (!uid) {
 		//redirect the user to login to access the his/her profile
@@ -120,7 +119,7 @@ async function restrictToLoggedUser(req, res, next) {
 //<------------------to restrict admin to perform operations like adding new topic and questions -------------------------------------------->
 
 async function authorized(req, res, next) {
-	const uid = req.cookies.uid;
+	const uid = req.body.uid;
 
 	const user = getUser(uid);
 
@@ -135,4 +134,4 @@ async function authorized(req, res, next) {
 	}
 	next();
 }
-export { userLogin, userSignUp, userLogOut, anyOneLoggedIn, restrictToLoggedUser, authorized };
+export { userLogin, userSignUp, anyOneLoggedIn, restrictToLoggedUser, authorized };

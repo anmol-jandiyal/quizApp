@@ -10,14 +10,9 @@ function activeFun({ isActive }) {
 
 const BASEURL = import.meta.env.VITE_BACKEND_URL;
 
-async function logoutFun(navigate) {
-	try {
-		const response = await axios.post(BASEURL + "users/logout", {}, { withCredentials: true });
-		console.log(response);
-		navigate("/login");
-	} catch (err) {
-		console.log(err);
-	}
+async function logoutFun(navigate, setUser) {
+	setUser(null);
+	navigate("/login");
 }
 
 export default function ProfileNavBar() {
@@ -41,7 +36,7 @@ export default function ProfileNavBar() {
 				onClick={() => {
 					if (confirm("Do you want to loggout?")) {
 						setUser(null);
-						logoutFun(navigate);
+						logoutFun(navigate, setUser);
 					}
 				}}>
 				LogOut

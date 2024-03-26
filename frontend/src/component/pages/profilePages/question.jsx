@@ -1,6 +1,7 @@
-import { useEffect, useReducer, useState } from "react";
+import { useContext, useEffect, useReducer, useState } from "react";
 import { useNavigate, useOutletContext } from "react-router-dom";
 import { updateScoresInDB } from "../../../controller/DB_RELATED_FUN";
+import { QuizContext } from "../../../controller/quizWrapper";
 
 function reducer(state, action) {
 	return { ...action };
@@ -10,6 +11,7 @@ export default function QuizQuestion() {
 	const [questionElement, setQuestionElement] = useState();
 	const [index, setIndex] = useState(0);
 	const [marks, dispatcher] = useReducer(reducer, { max: 0, obtain: 0 });
+	const { user } = useContext(QuizContext);
 
 	const navigate = useNavigate();
 
@@ -30,7 +32,7 @@ export default function QuizQuestion() {
 			setTimeout(() => {
 				if (index + 1 < questionBank.length) setIndex(index + 1);
 				else {
-					updateScoresInDB(marks, topic);
+					updateScoresInDB(marks, topic, user);
 					navigate("/quiz/" + topic + "/" + "solution");
 				}
 			}, 200);

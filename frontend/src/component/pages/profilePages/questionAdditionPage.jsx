@@ -1,5 +1,6 @@
-import { useCallback, useReducer } from "react";
+import { useCallback, useContext, useReducer } from "react";
 import { addQuestionToDB } from "../../../controller/DB_RELATED_FUN";
+import { QuizContext } from "../../../controller/quizWrapper";
 
 function reducer(state, action) {
 	switch (action.type) {
@@ -39,11 +40,11 @@ const initialQuestionState = { question: "", options: { a: "", b: "", c: "", d: 
 export default function QuestionAdditionPage() {
 	const [formData, dispatcher] = useReducer(reducer, { topic: "", questionBank: [] });
 	const [question, dispatcherQuestion] = useReducer(reducerQuestion, initialQuestionState);
-
+	const { user } = useContext(QuizContext);
 	const submitHandler = useCallback(
 		(e) => {
 			e.preventDefault();
-			addQuestionToDB(formData);
+			addQuestionToDB(formData, user);
 		},
 		[formData]
 	);

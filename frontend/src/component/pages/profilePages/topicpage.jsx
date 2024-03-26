@@ -13,7 +13,7 @@ export default function TopicPage() {
 	useEffect(() => {
 		if (user)
 			axios
-				.get(BASEURL + "questionBank/topics", { withCredentials: true })
+				.get(BASEURL + "questionBank/topics/" + user.uid, { withCredentials: true })
 				.then((response) => {
 					const topics = response.data.topics;
 					setOutput(

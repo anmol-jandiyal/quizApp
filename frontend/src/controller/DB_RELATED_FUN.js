@@ -13,17 +13,17 @@ async function addUserToDB(user, setMessage) {
 	}
 }
 
-async function updateScoresInDB(marks, topic) {
+async function updateScoresInDB(marks, topic, user) {
+	console.log(marks, topic);
 	try {
-		const response = await axios.post(BASEURL + "scores", { marks: marks, topic, time: new Date() }, { withCredentials: true });
+		const response = await axios.post(BASEURL + "scores", { marks: marks, topic, time: new Date(), uid: user.uid }, { withCredentials: true });
 	} catch (err) {
 		console.log(err);
 	}
 }
-async function addQuestionToDB(formData) {
-	console.log("inform ", formData);
+async function addQuestionToDB(formData, user) {
 	try {
-		const response = await axios.post(BASEURL + "questionBank", { ...formData }, { withCredentials: true });
+		const response = await axios.post(BASEURL + "questionBank", { ...formData, uid: user.uid }, { withCredentials: true });
 		console.log(response);
 	} catch (err) {
 		console.log("err", err);

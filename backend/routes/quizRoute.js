@@ -5,7 +5,7 @@ const questionBankRouter = express.Router();
 
 questionBankRouter.post("/", authorized, addQuestions);
 
-questionBankRouter.get("/topics", restrictToLoggedUser, getTopics);
-questionBankRouter.get("/questions/:topic", restrictToLoggedUser, getQuestions);
+questionBankRouter.get("/topics/:uid", restrictToLoggedUser, getTopics);
+questionBankRouter.get("/questions/:topic/:uid", restrictToLoggedUser, getQuestions);
 
 export default questionBankRouter;
