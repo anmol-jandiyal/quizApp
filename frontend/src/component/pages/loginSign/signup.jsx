@@ -6,6 +6,11 @@ import { useNavigate } from "react-router-dom";
 async function submitHandler(e, signUpData, setMessage, navigate) {
 	e.preventDefault();
 
+	if (signUpData.password < 8) {
+		alert("Password length must be greater than 8");
+		return;
+	}
+
 	if (signUpData.userName && signUpData.password === signUpData.confirmPassword && signUpData.name) {
 		const newEntry = { ...signUpData };
 		delete newEntry.confirmPassword;
