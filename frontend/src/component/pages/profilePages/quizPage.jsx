@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
-import { useParams, Outlet, useNavigate } from "react-router-dom";
+import { useParams, Outlet, useNavigate, useContext } from "react-router-dom";
+import { QuizContext } from "../../../controller/quizWrapper";
 import axios from "axios";
 
 const BASEURL = import.meta.env.VITE_BACKEND_URL;
@@ -8,17 +9,19 @@ export default function QuizPage() {
 	const { topic } = useParams();
 	const [questionBank, setQuestionBank] = useState([]);
 	const navigate = useNavigate();
+	const { user } = useContext(QuizContext);
 
 	useEffect(() => {
-		axios
-			.get(BASEURL + "questionbank/questions/" + topic, { withCredentials: true })
-			.then((response) => {
-				setQuestionBank(response.data.questions.questionBank);
-				navigate("/quiz/" + topic + "/" + "attempt");
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+		if (user)
+			axios
+				.get(BASEURL + "questionbank/questions/" + topic, { withCredentials: true })
+				.then((response) => {
+					setQuestionBank(response.data.questions.questionBank);
+					navigate("/quiz/" + topic + "/" + "attempt");
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 	}, []);
 	return (
 		<div className="quizPage">
