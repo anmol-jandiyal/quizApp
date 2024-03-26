@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
-import { useParams, Outlet, useNavigate, useContext } from "react-router-dom";
+import { useParams, Outlet, useNavigate } from "react-router-dom";
 import { QuizContext } from "../../../controller/quizWrapper";
+import { useContext } from "react";
 import axios from "axios";
 
 const BASEURL = import.meta.env.VITE_BACKEND_URL;
